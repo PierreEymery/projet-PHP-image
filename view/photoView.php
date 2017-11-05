@@ -4,11 +4,10 @@
 	<head>
 		<title>Site SIL3</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="../view/style.css" media="screen" title="Normal" />
+		<link rel="stylesheet" type="text/css" href="view/style.css" media="screen" title="Normal" />
 		</head>
 	<body>
-		<?php 				//var_dump($this->data);
- ?>
+		<?php 	//var_dump($this->data); ?>
 		<div id="entete">
 			<h1>Site SIL3</h1>
 		</div>
@@ -31,12 +30,23 @@
 					$menu['Zoom +']=$this->data->menu['Zoom +'];
 					// Demande à calculer un zoom sur l'image
 					$menu['Zoom -']=$this->data->menu['Zoom -'];
+
 					// Affichage du menu
 					foreach ($menu as $item => $act) {
 						print "<li><a href=\"$act\">$item</a></li>\n";
 					}
 					?>
 				</ul>
+				<?php //var_dump($this->data->categories); ?>
+				<form action="index.php?controller=photoMatrix&action=categorie" method="post">
+					Choisir une catégorie : <br>
+					<select name="categorie">
+						<?php foreach ($this->data->categories as $cat): ?>
+							<option value="<?= $cat['category'] ?>"><?= $cat['category'] ?></option>
+						<?php endforeach; ?>
+					</select>
+					<input type="submit">
+				</form>
 			</div>
 
 		<div id="corps">
@@ -67,5 +77,10 @@
 
 		<div id="pied_de_page">
 		</div>
+
+		<!-- formulaire d'affichage des photos par catégorie -->
+
+
+
 	</body>
 </html>

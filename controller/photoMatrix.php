@@ -64,6 +64,35 @@
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
+			$this->data->categories = $this->imageDAO->getCategories();
+
+			// Selectionne et charge la vue
+			require_once("view/mainView.php");
+		}
+
+		function categorie() {
+			$this->data->content="photoMatrixView.php";
+			// $firstImg = $this->imageDAO->getImage($this->imgId);
+			// $imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
+
+			$imgLst=$this->imageDAO->getCategoryImages($_POST["categorie"]);
+
+			foreach ($imgLst as $i) {
+				# l'identifiant de cette image $i
+				$iId=$i->getId();
+				# Ajoute à imgMatrixURL
+				#  0 : l'URL de l'image
+				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
+				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
+			}
+
+			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->imgId = $this->imgId;
+			$this->data->nbImg = sizeof($imgLst);
+
+			$this->data->categories = $this->imageDAO->getCategories();
+
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
 		}
@@ -87,6 +116,8 @@
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
+
+			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
@@ -114,6 +145,8 @@
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
+			$this->data->categories = $this->imageDAO->getCategories();
+
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
 		}
@@ -139,6 +172,8 @@
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
+
+			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
@@ -171,6 +206,8 @@
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
+			$this->data->categories = $this->imageDAO->getCategories();
+
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
 		}
@@ -196,6 +233,8 @@
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
+
+			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");

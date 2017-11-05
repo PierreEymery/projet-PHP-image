@@ -74,7 +74,7 @@
 
 			if ($s) {
 				$img = $s->fetchAll(PDO::FETCH_ASSOC);
-				return new Image(self::urlPath.$img[0]['path'],$img[0]['id'],$img[0]['category'],$img[0]['comment']);;
+				return new Image(self::urlPath.$img[0]['path'],$img[0]['id'],$img[0]['category'],$img[0]['comment']);
 			} else {
 				print "Error in getImage. id=".$id."<br/>";
 				$err= $this->db->errorInfo();
@@ -148,16 +148,25 @@
 
 		function getCategoryImages($cat): array {
 			$imagesListe = array();
-			$s = $this->db->query('SELECT * FROM image WHERE category='.$cat);
+			$s = $this->db->query('SELECT * FROM image WHERE category="'.$cat.'"');
 			if($s){
 				$images = $s->fetchAll(PDO::FETCH_ASSOC);
-				foreach ($images as $img) {
-					array_push($imagesListe, $img);
+				foreach ($images as $key => $value) {
+					$imagesListe[$key] = new Image(self::urlPath.$value['path'],$value['id'],$value['category'],$value['comment']);
 				}
-			}else{
+			}
+			// var_dump($imagesListe); die;
+			return $imagesListe;
+		}
+
+		function getCategories(): array {
+			$categories = array();
+			$s = $this->db->query('SELECT DISTINCT category FROM image');
+			if($s){
+				$categories = $s->fetchAll(PDO::FETCH_ASSOC);
 
 			}
-			return $imagesListe;
+			return $categories;
 		}
 
 

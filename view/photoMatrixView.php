@@ -4,7 +4,7 @@
 	<head>
 		<title>Site SIL3</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="../view/style.css" media="screen" title="Normal" />
+		<link rel="stylesheet" type="text/css" href="view/style.css" media="screen" title="Normal" />
 		</head>
 	<body>
 		<div id="entete">
@@ -30,6 +30,15 @@
 					}
 					?>
 				</ul>
+				<form action="index.php?controller=photoMatrix&action=categorie" method="post">
+					Choisir une catégorie : <br>
+					<select name="categorie">
+						<?php foreach ($this->data->categories as $cat): ?>
+							<option value="<?= $cat['category'] ?>"><?= $cat['category'] ?></option>
+						<?php endforeach; ?>
+					</select>
+					<input type="submit">
+				</form>
 			</div>
 
 		<div id="corps">

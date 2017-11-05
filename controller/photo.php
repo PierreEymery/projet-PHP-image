@@ -57,6 +57,8 @@
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['More']="index.php?controller=photoMatrix&imgId=".$this->imgId;
 
+			$this->data->categories = $this->imageDAO->getCategories();
+
 			$this->data->imgId=$this->imgId;
 			$this->data->imgCat=$this->img->getCat();
 			$this->data->imgURL=$this->img->getURL();
@@ -75,6 +77,8 @@
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['More']="index.php?controller=photoMatrix&imgId=".$this->imgId;
 
+			$this->data->categories = $this->imageDAO->getCategories();
+
 			$this->data->imgId=$this->imgId;
 			$this->data->imgCat=$this->img->getCat();
 			$this->data->imgURL=$this->img->getURL();
@@ -89,6 +93,8 @@
 			$prevImg =$this->imageDAO->getImage($this->imgId);
 			$this->img=$this->imageDAO->getNextImage($prevImg);
 			$this->imgId = $this->img->getId();
+
+			$this->data->categories = $this->imageDAO->getCategories();
 
 			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
@@ -109,6 +115,8 @@
 			$this->img=$this->imageDAO->getPrevImage($nextImg);
 			$this->imgId = $this->img->getId();
 
+			$this->data->categories = $this->imageDAO->getCategories();
+
 			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['More']="index.php?controller=photoMatrix&imgId=".$this->imgId;
@@ -126,6 +134,8 @@
 			$this->data->content="photoView.php";
 			$this->img =$this->imageDAO->getImage($this->imageDAO->getRandomImage());
 			$this->imgId = $this->img->getId();
+
+			$this->data->categories = $this->imageDAO->getCategories();
 
 			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
@@ -145,6 +155,8 @@
 			$this->img =$this->imageDAO->getImage($this->imgId);
 			$this->data->size *= $this->zoom;
 			$this->imgId = $this->img->getId();
+
+			$this->data->categories = $this->imageDAO->getCategories();
 
 			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
