@@ -42,7 +42,7 @@
 			$this->data->menu['A propos']="index.php?controller=home&action=aPropos";
 			$this->data->menu['Voir photos']="index.php?controller=photo&action=first";
 			$this->data->menu['Random']="index.php?controller=photo&action=random&size=".$this->data->size;
-
+			$this->data->menu['Depot']="index.php?controller=photo&action=depotImage";
 		}
 
 		// LISTE DES ACTIONS DE CE CONTROLEUR
@@ -170,5 +170,83 @@
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
 		}
+
+		function updateCategorie(){
+			$imgId = $_POST["imgId"];
+			$newCategorie = $_POST["newCategorie"];
+
+			$this->imageDAO->updateCategorieImage($imgId, $newCategorie);
+
+			$this->data->content="photoView.php";
+			$this->img=$this->imageDAO->getImage($imgId);
+			$this->imgId = $this->img->getId();
+
+			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
+			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
+			$this->data->menu['More']="index.php?controller=photoMatrix&imgId=".$this->imgId;
+
+			$this->data->categories = $this->imageDAO->getCategories();
+
+			$this->data->imgId=$this->imgId;
+			$this->data->imgCat=$this->img->getCat();
+			$this->data->imgURL=$this->img->getURL();
+			$this->data->imgComment=$this->img->getComment();
+			// Selectionne et charge la vue
+			require_once("view/mainView.php");
+		}
+
+		function updateComment(){
+			$imgId = $_POST["imgId"];
+			$newComment = $_POST["newComment"];
+
+			$this->imageDAO->updateCommentImage($imgId, $newComment);
+
+			$this->data->content="photoView.php";
+			$this->img=$this->imageDAO->getImage($imgId);
+			$this->imgId = $this->img->getId();
+
+			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
+			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
+			$this->data->menu['More']="index.php?controller=photoMatrix&imgId=".$this->imgId;
+
+			$this->data->categories = $this->imageDAO->getCategories();
+
+			$this->data->imgId=$this->imgId;
+			$this->data->imgCat=$this->img->getCat();
+			$this->data->imgURL=$this->img->getURL();
+			$this->data->imgComment=$this->img->getComment();
+			// Selectionne et charge la vue
+			require_once("view/mainView.php");
+		}
+
+		function depotImage(){
+			if (isset($_FILES['newFile'])) {
+				if (isset($_POST["fileNewCategorie"])) {
+					$categorie = $_POST["fileNewCategorie"];
+				}else{
+					$categorie = $_POST["fileCategorie"];
+				}
+				$comment = $_POST["fileComment"];
+				$file = $_FILES['newFile'];
+				$this->imageDAO->saveFile($file, $categorie, $comment);
+
+				$this->data->content="depotView.php";
+
+				$this->data->categories = $this->imageDAO->getCategories();
+
+				// Selectionne et charge la vue
+				require_once("view/mainView.php");
+
+			}else{
+				$this->data->content="depotView.php";
+
+				$this->data->categories = $this->imageDAO->getCategories();
+
+				// Selectionne et charge la vue
+				require_once("view/mainView.php");
+			}
+
+		}
+
 	}
 ?>

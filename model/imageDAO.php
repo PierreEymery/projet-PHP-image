@@ -9,7 +9,7 @@
 		# Chemin LOCAL où se trouvent les images
 		private $path="model/IMG/";
 		# Chemin URL où se trouvent les images
-		const urlPath="http://localhost/image/model/IMG/";
+		const urlPath="http://localhost/projet-PHP-image/model/IMG/";
 
 		# Tableau pour stocker tous les chemins des images
 		private $imgEntry;
@@ -74,7 +74,7 @@
 
 			if ($s) {
 				$img = $s->fetchAll(PDO::FETCH_ASSOC);
-				return new Image(self::urlPath.$img[0]['path'],$img[0]['id'],$img[0]['category'],$img[0]['comment']);
+				return new Image(self::urlPath.$img[0]['path'],$img[0]['id'],$img[0]['category'],$img[0]['comment'],$img[0]['totalNotes'],$img[0]['nbVotes']);
 			} else {
 				print "Error in getImage. id=".$id."<br/>";
 				$err= $this->db->errorInfo();
@@ -152,7 +152,7 @@
 			if($s){
 				$images = $s->fetchAll(PDO::FETCH_ASSOC);
 				foreach ($images as $key => $value) {
-					$imagesListe[$key] = new Image(self::urlPath.$value['path'],$value['id'],$value['category'],$value['comment']);
+					$imagesListe[$key] = new Image(self::urlPath.$value['path'],$value['id'],$value['category'],$value['comment'],$value['totalNotes'],$value['nbVotes']);
 				}
 			}
 			// var_dump($imagesListe); die;
@@ -169,7 +169,28 @@
 			return $categories;
 		}
 
+		function updateCategorieImage($imgId, $newCat) {
+			$s = $this->db->query('UPDATE image SET category="'.$newCat.'" WHERE id='.$imgId);
+		}
 
+		function updateCommentImage($imgId, $newComment) {
+			$s = $this->db->query('UPDATE image SET comment="'.$newComment.'" WHERE id='.$imgId);
+		}
+
+		function saveFile($file, $categorie, $comment) {
+
+			$q = $this->db->query('SELECT MAX(id) FROM image');
+
+			$id = $q->fetch()[0] + 1;
+
+			$imagesDir = "model/IMG/jons/uploads/";
+			$targetFile = $imagesDir . basename($file["name"]);
+
+			move_uploaded_file($file["tmp_name"], $targetFile);
+
+			$s = $this->db->query('INSERT INTO image VALUES ('.$id.', "jons/uploads/'.$file['name'].'", "'.$categorie.'", "'.$comment.'", 0, 0)');
+
+		}
 
 	}
 

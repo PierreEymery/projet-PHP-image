@@ -30,6 +30,8 @@
 					$menu['Zoom +']=$this->data->menu['Zoom +'];
 					// Demande à calculer un zoom sur l'image
 					$menu['Zoom -']=$this->data->menu['Zoom -'];
+					// Permet de déposer une nouvelle image
+					$menu['Depot']=$this->data->menu['Depot'];
 
 					// Affichage du menu
 					foreach ($menu as $item => $act) {
@@ -47,6 +49,11 @@
 					</select>
 					<input type="submit">
 				</form>
+				<!-- <form action="index.php?controller=photoMatrix&action=createCategorie" method="post">
+					Créer une catégorie : <br>
+					<input type="text" name="newCat" value="">
+					<input type="submit">
+				</form> -->
 			</div>
 
 		<div id="corps">
@@ -73,6 +80,23 @@
 
 				print "<p>".$this->data->imgComment."</p>";
 				?>
+				<form action="index.php?controller=photo&action=updateCategorie" method="post">
+					Modifier la catégorie :<br>
+					<select name="newCategorie">
+						<?php foreach ($this->data->categories as $cat): ?>
+							<option value="<?= $cat['category'] ?>"><?= $cat['category'] ?></option>
+						<?php endforeach; ?>
+					</select>
+					<input type="hidden" name="imgId" value="<?= $imgId ?>">
+					<input type="submit">
+				</form>
+
+				<form action="index.php?controller=photo&action=updateComment" method="post">
+					Modifier le commentaire :<br>
+					<textarea name="newComment" rows="8" cols="80"></textarea><br>
+					<input type="hidden" name="imgId" value="<?= $imgId ?>">
+					<input type="submit">
+				</form>
 			</div>
 
 		<div id="pied_de_page">
