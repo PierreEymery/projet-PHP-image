@@ -9,7 +9,7 @@
     private $totalNotes = 0;
     private $nbVotes = 0;
 
-    function __construct($u,$id,$cat,$comment,$totalNotes,$nbVotes) {
+    function __construct($u=null,$id=null,$cat=null,$comment=null,$totalNotes=null,$nbVotes=null) {
       $this->url = $u;
       $this->id = $id;
       $this->category = $cat;
