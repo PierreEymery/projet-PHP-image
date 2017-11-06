@@ -155,6 +155,11 @@
 				foreach ($images as $key => $value) {
 					$imagesListe[$key] = new Image(self::urlPath.$value['path'],$value['id'],$value['category'],$value['comment'],$value['totalNotes'],$value['nbVotes']);
 				}
+			}else{
+				print "Error in getCategoryImages. categorie=".$cat."<br/>";
+				$err= $this->db->errorInfo();
+				print $err[2]."<br/>";
+				die;
 			}
 			// var_dump($imagesListe); die;
 			return $imagesListe;
@@ -165,17 +170,37 @@
 			$s = $this->db->query('SELECT DISTINCT category FROM image');
 			if($s){
 				$categories = $s->fetchAll(PDO::FETCH_ASSOC);
-
+			}else{
+				print "Error in getCategories.<br/>";
+				$err= $this->db->errorInfo();
+				print $err[2]."<br/>";
+				die;
 			}
 			return $categories;
 		}
 
 		function updateCategorieImage($imgId, $newCat) {
 			$s = $this->db->query('UPDATE image SET category="'.$newCat.'" WHERE id='.$imgId);
+			if ($s) {
+				# update OK
+			}else{
+				print "Error in updateCategorieImage. id=".$imgId."<br/>";
+				$err= $this->db->errorInfo();
+				print $err[2]."<br/>";
+				die;
+			}
 		}
 
 		function updateCommentImage($imgId, $newComment) {
 			$s = $this->db->query('UPDATE image SET comment="'.$newComment.'" WHERE id='.$imgId);
+			if ($s) {
+				# update OK
+			}else{
+				print "Error in updateCommentImage. id=".$imgId."<br/>";
+				$err= $this->db->errorInfo();
+				print $err[2]."<br/>";
+				die;
+			}
 		}
 
 		function saveFile($file, $categorie, $comment) {
@@ -187,21 +212,56 @@
 			$imagesDir = "model/IMG/jons/uploads/";
 			$targetFile = $imagesDir . basename($file["name"]);
 
-			move_uploaded_file($file["tmp_name"], $targetFile);
+			$res = move_uploaded_file($file["tmp_name"], $targetFile);
 
-			$s = $this->db->query('INSERT INTO image VALUES ('.$id.', "jons/uploads/'.$file['name'].'", "'.$categorie.'", "'.$comment.'", 0, 0)');
+			if ($res != false) {
+				$s = $this->db->query('INSERT INTO image VALUES ('.$id.', "jons/uploads/'.$file['name'].'", "'.$categorie.'", "'.$comment.'", 0, 0)');
+
+				if ($s) {
+					# insert OK
+				}else{
+					print "Error in saveFile. file=".$file['name']."<br/>";
+					$err= $this->db->errorInfo();
+					print $err[2]."<br/>";
+					die;
+				}
+
+			} else {
+				print "Error in move_uploaded_file. file=".$file['name']."<br/>";
+				die;
+			}
+
 
 		}
 
 		function setNoteImage($imgId, $note) {
 			$s = $this->db->query('SELECT * FROM image WHERE id="'.$imgId.'"');
-			$r = $s->fetchAll(PDO::FETCH_ASSOC);
-			$image = new Image(self::urlPath.$r[0]['path'],$r[0]['id'],$r[0]['category'],$r[0]['comment'],$r[0]['totalNotes'],$r[0]['nbVotes']);
-			$image->addNote($note);
-			$totalVotes = $image->getTotalNotes();
-			$nbVotes = $image->getNbVotes();
 
-			$s = $this->db->query('UPDATE image SET totalNotes="'.$totalVotes.'", nbVotes="'.$nbVotes.'" WHERE id='.$imgId);
+			if ($s) {
+				$r = $s->fetchAll(PDO::FETCH_ASSOC);
+				$image = new Image(self::urlPath.$r[0]['path'],$r[0]['id'],$r[0]['category'],$r[0]['comment'],$r[0]['totalNotes'],$r[0]['nbVotes']);
+				$image->addNote($note);
+				$totalVotes = $image->getTotalNotes();
+				$nbVotes = $image->getNbVotes();
+
+				$s = $this->db->query('UPDATE image SET totalNotes="'.$totalVotes.'", nbVotes="'.$nbVotes.'" WHERE id='.$imgId);
+
+				if ($s) {
+					# update OK
+				}else{
+					print "Error in setNoteImage. id=".$imgId."<br/>";
+					$err= $this->db->errorInfo();
+					print $err[2]."<br/>";
+					die;
+				}
+
+			}else{
+				print "Error in setNoteImage. id=".$imgId."<br/>";
+				$err= $this->db->errorInfo();
+				print $err[2]."<br/>";
+				die;
+			}
+
 
 		}
 
