@@ -47,7 +47,7 @@
 							<option value="<?= $cat['category'] ?>"><?= $cat['category'] ?></option>
 						<?php endforeach; ?>
 					</select>
-					<input type="submit">
+					<input type="submit" value="Valider">
 				</form>
 				<!-- <form action="index.php?controller=photoMatrix&action=createCategorie" method="post">
 					Créer une catégorie : <br>
@@ -65,7 +65,6 @@
 				$imgId=$this->data->imgId;
 
 				print "<a href=\"index.php?controller=photo&action=prev&imgId=$imgId&size=".$size."\">Prev</a> ";
-				// pre-calcul de l'image suivante
 				print "<a href=\"index.php?controller=photo&action=next&imgId=$imgId&size=".$size."\">Next</a>\n";
 				print "</p>\n";
 				print "<p>".$this->data->imgCat."</p>";
@@ -76,10 +75,22 @@
 
 				print "<img src=\"".$this->data->imgURL."\" width=\"".$size."\">\n";
 				print "</a>\n";
-
+				print "<p>Note : ".$this->data->moyenne."</p>";
+				print "<p>Nombre de votes : ".$this->data->nbVotes."</p>";
 
 				print "<p>".$this->data->imgComment."</p>";
 				?>
+				<form action="index.php?controller=photo&action=setNote" method="post">
+					Attribuer une note :<br>
+					<select name="note">
+						<?php foreach (range(0,5) as $note): ?>
+							<option value="<?= $note ?>"><?= $note ?></option>
+						<?php endforeach; ?>
+					</select>
+					<input type="hidden" name="imgId" value="<?= $imgId ?>">
+					<input type="submit" value="Valider">
+				</form>
+
 				<form action="index.php?controller=photo&action=updateCategorie" method="post">
 					Modifier la catégorie :<br>
 					<select name="newCategorie">
@@ -88,14 +99,14 @@
 						<?php endforeach; ?>
 					</select>
 					<input type="hidden" name="imgId" value="<?= $imgId ?>">
-					<input type="submit">
+					<input type="submit" value="Valider">
 				</form>
 
 				<form action="index.php?controller=photo&action=updateComment" method="post">
 					Modifier le commentaire :<br>
 					<textarea name="newComment" rows="8" cols="80"></textarea><br>
 					<input type="hidden" name="imgId" value="<?= $imgId ?>">
-					<input type="submit">
+					<input type="submit" value="Valider">
 				</form>
 			</div>
 

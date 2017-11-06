@@ -35,8 +35,8 @@
       return $this->comment;
     }
 
-    function getTotalVotes() {
-      return $this->totalVotes;
+    function getTotalNotes() {
+      return $this->totalNotes;
     }
 
     function getNbVotes() {
@@ -44,7 +44,16 @@
     }
 
     function getNote() {
-      return $this->getTotalVotes()/$this->getNbVotes();
+      if ($this->getNbVotes() > 0) {
+        return number_format($this->getTotalNotes()/$this->getNbVotes(), 1, '.', ',');
+      } else {
+        return null;
+      }
+    }
+
+    function addNote($note) {
+      $this->totalNotes += $note;
+      $this->nbVotes++;
     }
   }
 

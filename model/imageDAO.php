@@ -139,6 +139,7 @@
 			}
 			$id = $img->getId();
 			$max = $id+$nb;
+			$res = array();
 			while ($id < $this->size() && $id < $max) {
 				$res[] = $this->getImage($id);
 				$id++;
@@ -189,6 +190,18 @@
 			move_uploaded_file($file["tmp_name"], $targetFile);
 
 			$s = $this->db->query('INSERT INTO image VALUES ('.$id.', "jons/uploads/'.$file['name'].'", "'.$categorie.'", "'.$comment.'", 0, 0)');
+
+		}
+
+		function setNoteImage($imgId, $note) {
+			$s = $this->db->query('SELECT * FROM image WHERE id="'.$imgId.'"');
+			$r = $s->fetchAll(PDO::FETCH_ASSOC);
+			$image = new Image(self::urlPath.$r[0]['path'],$r[0]['id'],$r[0]['category'],$r[0]['comment'],$r[0]['totalNotes'],$r[0]['nbVotes']);
+			$image->addNote($note);
+			$totalVotes = $image->getTotalNotes();
+			$nbVotes = $image->getNbVotes();
+
+			$s = $this->db->query('UPDATE image SET totalNotes="'.$totalVotes.'", nbVotes="'.$nbVotes.'" WHERE id='.$imgId);
 
 		}
 

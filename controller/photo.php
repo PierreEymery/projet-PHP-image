@@ -52,6 +52,8 @@
 			$this->data->content="photoView.php";
 			$this->img=$this->imageDAO->getImage($this->imgId);
 			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
 
 			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
@@ -72,6 +74,8 @@
 			$this->data->content="photoView.php";
 			$this->img=$this->imageDAO->getFirstImage();
 			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
 
 			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
@@ -93,6 +97,8 @@
 			$prevImg =$this->imageDAO->getImage($this->imgId);
 			$this->img=$this->imageDAO->getNextImage($prevImg);
 			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
 
 			$this->data->categories = $this->imageDAO->getCategories();
 
@@ -114,6 +120,8 @@
 			$nextImg =$this->imageDAO->getImage($this->imgId);
 			$this->img=$this->imageDAO->getPrevImage($nextImg);
 			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
 
 			$this->data->categories = $this->imageDAO->getCategories();
 
@@ -134,6 +142,8 @@
 			$this->data->content="photoView.php";
 			$this->img =$this->imageDAO->getImage($this->imageDAO->getRandomImage());
 			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
 
 			$this->data->categories = $this->imageDAO->getCategories();
 
@@ -155,6 +165,9 @@
 			$this->img =$this->imageDAO->getImage($this->imgId);
 			$this->data->size *= $this->zoom;
 			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
+
 
 			$this->data->categories = $this->imageDAO->getCategories();
 
@@ -180,6 +193,9 @@
 			$this->data->content="photoView.php";
 			$this->img=$this->imageDAO->getImage($imgId);
 			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
+
 
 			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
@@ -204,6 +220,35 @@
 			$this->data->content="photoView.php";
 			$this->img=$this->imageDAO->getImage($imgId);
 			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
+
+
+			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
+			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
+			$this->data->menu['More']="index.php?controller=photoMatrix&imgId=".$this->imgId;
+
+			$this->data->categories = $this->imageDAO->getCategories();
+
+			$this->data->imgId=$this->imgId;
+			$this->data->imgCat=$this->img->getCat();
+			$this->data->imgURL=$this->img->getURL();
+			$this->data->imgComment=$this->img->getComment();
+			// Selectionne et charge la vue
+			require_once("view/mainView.php");
+		}
+
+		function setNote(){
+			$imgId = $_POST["imgId"];
+			$note = $_POST["note"];
+
+			$this->imageDAO->setNoteImage($imgId, $note);
+
+			$this->data->content="photoView.php";
+			$this->img=$this->imageDAO->getImage($imgId);
+			$this->imgId = $this->img->getId();
+			$this->data->moyenne = $this->img->getNote();
+			$this->data->nbVotes = $this->img->getNbVotes();
 
 			$this->data->menu['Zoom +']="index.php?controller=photo&action=zoom&zoom=1.2&imgId=".$this->imgId."&size=".$this->data->size;
 			$this->data->menu['Zoom -']="index.php?controller=photo&action=zoom&zoom=0.8&imgId=".$this->imgId."&size=".$this->data->size;
