@@ -19,19 +19,19 @@
     }
 
     # Retourne l'URL de cette image
-    function getURL() {
+    function getURL(): string {
 		return $this->url;
     }
 
-    function getId() {
+    function getId(): int{
       return $this->id;
     }
 
-    function getCat() {
+    function getCat(): string {
       return $this->category;
     }
 
-    function getComment() {
+    function getComment(): string {
       return $this->comment;
     }
 
@@ -51,7 +51,7 @@
       }
     }
 
-    function addNote($note) {
+    function addNote($note): void {
       $this->totalNotes += $note;
       $this->nbVotes++;
     }

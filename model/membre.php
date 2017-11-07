@@ -14,15 +14,15 @@ class User {
         $this->password = $password;
     }
 
-    function getId() {
+    function getId(): int {
         return $this->id;
     }
 
-    function getLogin() {
+    function getLogin(): string {
         return $this->login;
     }
 
-    function getPassword() {
+    function getPassword(): string {
         return $this->password;
     }
 

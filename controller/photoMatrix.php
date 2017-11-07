@@ -61,6 +61,8 @@
 
 			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
@@ -89,6 +91,8 @@
 
 			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = sizeof($imgLst);
 
@@ -115,6 +119,8 @@
 
 			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
@@ -143,6 +149,8 @@
 
 			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
@@ -171,6 +179,8 @@
 
 			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
@@ -204,6 +214,8 @@
 
 			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
@@ -232,6 +244,8 @@
 
 			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
 			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+
 			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
 
@@ -239,6 +253,35 @@
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
+		}
+
+		function randomImage() {
+			$this->data->content="photoMatrixView.php";
+			$firstImg = $this->imageDAO->getImage($this->imageDAO->getRandomImage());
+			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
+			$this->imgId = $firstImg->getId();
+
+			foreach ($imgLst as $i) {
+				# l'identifiant de cette image $i
+				$iId=$i->getId();
+				# Ajoute à imgMatrixURL
+				#  0 : l'URL de l'image
+				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
+				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
+			}
+
+			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+
+			$this->data->imgId = $this->imgId;
+			$this->data->nbImg = $this->nbImg;
+
+			$this->data->categories = $this->imageDAO->getCategories();
+
+			// Selectionne et charge la vue
+			require_once("view/mainView.php");
+
 		}
 
 	}

@@ -28,8 +28,8 @@
 					$menu['Home']=$this->data->menu['Home'];
 					$menu['A propos']=$this->data->menu['A propos'];
 					$menu['First']=$this->data->menu['First'];
-					// $menu['Random']="viewPhoto.php?imgId=".$imgDAO->getRandomImage()."&size=$size";
-					$menu['More']=$this->data->menu['More'];						
+					$menu['Random']=$this->data->menu['Random'];
+					$menu['More']=$this->data->menu['More'];
 					if($this->data->nbImg != 1){
 					 	$menu['Less']=$this->data->menu['Less'];
 					}
@@ -53,14 +53,19 @@
 		<div id="corps">
 			<?php # mise en place de la vue partielle : le contenu central de la page
 				# Mise en place des deux boutons
-				print "<p>\n";
-				if ($this->data->imgId > 1) {
-					print "<a href=\"index.php?controller=photoMatrix&action=prev&imgId=".$this->data->imgId."&nbImg=".$this->data->nbImg."\">Prev</a> ";
+				if (isset($this->data->categorieAffichee)) {
+				}else{
+					print "<p>\n";
+
+					if ($this->data->imgId > 1) {
+						print "<a href=\"index.php?controller=photoMatrix&action=prev&imgId=".$this->data->imgId."&nbImg=".$this->data->nbImg."\">Prev</a> ";
+					}
+					if ($this->data->nbImg + $this->data->imgId < $this->data->count) {
+						print "<a href=\"index.php?controller=photoMatrix&action=next&imgId=".$this->data->imgId."&nbImg=".$this->data->nbImg."\">Next</a> ";
+					}
+					print "</p>\n";
 				}
-				if ($this->data->nbImg + $this->data->imgId < $this->data->count) {
-					print "<a href=\"index.php?controller=photoMatrix&action=next&imgId=".$this->data->imgId."&nbImg=".$this->data->nbImg."\">Next</a> ";
-				}
-				print "</p>\n";
+
 
 				// Réalise l'affichage de l'image
 				# Adapte la taille des images au nombre d'images présentes

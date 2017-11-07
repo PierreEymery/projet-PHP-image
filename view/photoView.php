@@ -68,7 +68,9 @@
 				$size=$this->data->size;
 				$imgId=$this->data->imgId;
 
-				print "<a href=\"index.php?controller=photo&action=prev&imgId=$imgId&size=".$size."\">Prev</a> ";
+				if ($imgId > 1) {
+					print "<a href=\"index.php?controller=photo&action=prev&imgId=$imgId&size=".$size."\">Prev</a> ";
+				}
 				print "<a href=\"index.php?controller=photo&action=next&imgId=$imgId&size=".$size."\">Next</a>\n";
 				print "</p>\n";
 				print "<p class=\"lead\">".$this->data->imgCat."</p>";
