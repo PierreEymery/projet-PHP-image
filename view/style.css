@@ -4,10 +4,18 @@ body {  width: 90%;
   margin-right: auto !important;
   color: 	#2F4F4F;
   border: 1px dotted navy;
-   }
+}
 
 #entete {
  border-bottom: 1px dotted navy;
+ background: linear-gradient(
+   45deg,
+   #cee1ff,
+   #cee1ff,
+   #93deff,
+   #93deff
+ );
+ background-size: 100% 20px;
 }
 
 #menu {
