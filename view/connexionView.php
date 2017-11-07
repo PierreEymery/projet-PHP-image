@@ -19,13 +19,13 @@
                     <div class="form-group">
                         <label class="col-md-6 control-label">Login</label>
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="login" placeholder="Login">
+                            <input type="text" class="form-control" name="login" placeholder="Login" required>
                         </div>
                         <br></br>
                         <div class="form-group">
                             <label class="col-md-6 control-label">Mot de passe</label>
                             <div class="col-md-12">
-                                <input type="password" class="form-control" name="password" placeholder="Mot de passe">
+                                <input type="password" class="form-control" name="password" placeholder="Mot de passe" required>
                             </div>
                         </div>
                         <br/><br/>
@@ -44,13 +44,13 @@
                     <div class="form-group">
                         <label class="col-md-6 control-label">Login</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="login" placeholder="Login">
+                            <input type="text" class="form-control" name="login" placeholder="Login" required>
                         </div>
                     </div><br/>
                     <div class="form-group">
                         <label class="col-md-6 control-label">Mot de passe</label>
                         <div class="col-md-10">
-                            <input type="password" class="form-control" name="password" placeholder="Mot de passe">
+                            <input type="password" class="form-control" name="password" placeholder="Mot de passe" required>
                         </div>
                     </div>
                     <br/><br/><center><button type="submit" name="inscription" class="btn btn-primary">S'Inscrire</button></center>

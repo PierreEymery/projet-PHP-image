@@ -49,7 +49,7 @@
 		<div id="corps">
 			<form action="index.php?controller=photo&action=depotImage" method="post" enctype="multipart/form-data">
 				Choisir l'image à déposer : <br>
-				<input type="file" name="newFile" id="newFile"><br><br>
+				<input type="file" name="newFile" id="newFile" required ><br><br>
 				Choisir la catégorie de cette photo :<br>
 				<select name="fileCategorie" class="custom-select">
 					<?php foreach ($this->data->categories as $cat): ?>

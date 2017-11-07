@@ -106,7 +106,7 @@
 
 				<form action="index.php?controller=photo&action=updateComment" method="post">
 					Modifier le commentaire :<br>
-					<textarea name="newComment" rows="8" cols="50" class="form-control"></textarea><br>
+					<textarea name="newComment" rows="8" cols="50" class="form-control" required ></textarea><br>
 					<input type="hidden" name="imgId" value="<?= $imgId ?>">
 					<input type="submit" class="btn btn-success" value="Valider">
 				</form>
