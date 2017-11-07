@@ -5,14 +5,23 @@
 		<title>Site SIL3</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="view/style.css" media="screen" title="Normal" />
+		        <link rel="stylesheet" type="text/css" href="view/bootstrap/css/bootstrap.min.css"/>
 		</head>
 	<body>
 		<div id="entete">
-			<h1>Site SIL3</h1>
-			</div>
-		<div id="menu">
+			<h1>&nbsp;Site SIL3
+				<span class="float-right">
+					<form action="index.php" method="post">
+						<?php print "<span class=\"lead\">Bonjour, ".$_SESSION["login"]."</span>"; ?>
+								<button type="submit" name="log_out" class="btn btn-primary">Deconnexion</button>
+								&nbsp;
+					</form>
+				</span>
+			</h1>
+		</div>
+		<div id="menu" class="text-center">
 			<h3>Menu</h3>
-			<ul>
+			<ul class="list-unstyled">
 				<?php
 
 					# Mise en place du menu
@@ -20,7 +29,7 @@
 					$menu['A propos']=$this->data->menu['A propos'];
 					$menu['First']=$this->data->menu['First'];
 					// $menu['Random']="viewPhoto.php?imgId=".$imgDAO->getRandomImage()."&size=$size";
-					$menu['More']=$this->data->menu['More'];
+					$menu['More']=$this->data->menu['More'];						
 					if($this->data->nbImg != 1){
 					 	$menu['Less']=$this->data->menu['Less'];
 					}
@@ -32,12 +41,12 @@
 				</ul>
 				<form action="index.php?controller=photoMatrix&action=categorie" method="post">
 					Choisir une catégorie : <br>
-					<select name="categorie">
+					<select name="categorie" class="custom-select">
 						<?php foreach ($this->data->categories as $cat): ?>
 							<option value="<?= $cat['category'] ?>"><?= $cat['category'] ?></option>
 						<?php endforeach; ?>
 					</select>
-					<input type="submit">
+					<input class="btn btn-info" type="submit">
 				</form>
 			</div>
 
@@ -59,12 +68,17 @@
 					$size = 480 / sqrt(count($this->data->imgMatrixURL));
 				# Affiche les images
 				foreach ($this->data->imgMatrixURL as $i) {
-					print "<a href=\"".$i[1]."\"><img src=\"".$i[0]."\" width=\"".$size."\" height=\"".$size."\"></a>\n";
+					print "<a href=\"".$i[1]."\"><img src=\"".$i[0]."\" width=\"".$size."\" height=\"".$size."\" class=\"img-thumbnail\"></a>\n";
 				};
+
+
+			}
+
+			if (isset($this->data->categorieAffichee)) {
+				print "<p class=\"lead\">Catégorie : ".$this->data->categorieAffichee."</p>";
 			}
 				?>
-			</div>
-
+		</div>
 		<div id="pied_de_page">
 			</div>
 		</body>

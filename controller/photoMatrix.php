@@ -72,6 +72,7 @@
 
 		function categorie() {
 			$this->data->content="photoMatrixView.php";
+			$this->data->categorieAffichee=$_POST["categorie"];
 			// $firstImg = $this->imageDAO->getImage($this->imgId);
 			// $imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
 

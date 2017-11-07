@@ -1,5 +1,6 @@
 <?php
   # Controleur frontal (front controler)
+  session_start();
 
   # En fonction du controleur et de l'action en parametre lance le bon traitement
   # Recherche le nom du controleur
@@ -15,6 +16,14 @@
   } else {
     # Si pas d'action trouvée, definit une action par defaut
     $action = "index";
+  }
+
+  if (isset($_POST['log_out'])) {
+      session_destroy();
+      $controller_to_run = 'membre';
+  }
+  if (!isset($_SESSION['login'])) {
+      $controller_to_run = 'membre';
   }
 
   # Chargement du module de controleur correspondant à l'action

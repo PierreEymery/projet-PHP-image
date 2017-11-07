@@ -5,15 +5,29 @@
 		<title>Site SIL3</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="view/style.css" media="screen" title="Normal" />
-		</head>
+		<link rel="stylesheet" type="text/css" href="view/bootstrap/css/bootstrap.min.css"/>
+		<script src="view/bootstrap/js/bootstrap.min.js" type="text/javascript">		</script>
+
+
+	</head>
 	<body>
 		<?php 	//var_dump($this->data); ?>
+
 		<div id="entete">
-			<h1>Site SIL3</h1>
+			<h1>&nbsp;Site SIL3
+				<span class="float-right">
+					<form action="index.php" method="post">
+						<?php print "<span class=\"lead\">Bonjour, ".$_SESSION["login"]."</span>"; ?>
+
+								<button type="submit" name="log_out" class="btn btn-primary">Deconnexion</button>
+								&nbsp;
+					</form>
+				</span>
+			</h1>
 		</div>
-		<div id="menu">
+		<div id="menu" class="text-center">
 			<h3>Menu</h3>
-			<ul>
+			<ul class="list-unstyled">
 				<?php
 
 					# Mise en place du menu
@@ -37,16 +51,16 @@
 				Choisir l'image à déposer : <br>
 				<input type="file" name="newFile" id="newFile"><br><br>
 				Choisir la catégorie de cette photo :<br>
-				<select name="fileCategorie">
+				<select name="fileCategorie" class="custom-select">
 					<?php foreach ($this->data->categories as $cat): ?>
 						<option value="<?= $cat['category'] ?>"><?= $cat['category'] ?></option>
 					<?php endforeach; ?>
 				</select><br><br>
 				Ou créer une nouvelle catégorie :<br>
-				<input type="text" name="fileNewCategorie" value=""><br><br>
+				<input type="text" name="fileNewCategorie" class="form-control" value=""><br>
 				Choisir le commentaire de la photo :<br>
-				<textarea name="fileComment" rows="8" cols="80" required></textarea><br>
-				<input type="submit" name="" value="Enregistrer">
+				<textarea name="fileComment" rows="8" cols="80" class="form-control" required></textarea><br>
+				<input type="submit" class="btn btn-primary" name="" value="Enregistrer">
 			</form>
 		</div>
 
