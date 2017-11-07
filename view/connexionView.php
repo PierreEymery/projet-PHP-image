@@ -9,6 +9,11 @@
         <link rel="stylesheet" type="text/css" href="view/bootstrap/css/bootstrap.min.css"/>
     </head>
     <body class="container">
+        <?php if (isset($this->data->message)) { ?>
+          <div class="row">
+            <?php echo $this->data->message; ?>
+          </div>
+        <?php } ?>
         <div class="row">
             <div class="col-lg-3"></div>
             <div class="col-lg-6">

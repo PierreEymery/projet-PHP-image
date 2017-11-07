@@ -13,7 +13,7 @@
 			<h1>&nbsp;Site SIL3
 				<span class="float-right">
 					<form action="index.php" method="post">
-						<?php print "<span class=\"lead\">Bonjour, ".$_SESSION["login"]."</span>"; ?>
+						<?php print "<span class=\"lead\">Bonjour, ".$this->data->login."</span>"; ?>
 								<button type="submit" name="log_out" class="btn btn-primary">Deconnexion</button>
 								&nbsp;
 					</form>
@@ -24,26 +24,8 @@
 			<h3>Menu</h3>
 			<ul class="list-unstyled">
 				<?php
-
-					# Mise en place du menu
-					$menu['Home']=$this->data->menu['Home'];
-					$menu['A propos']=$this->data->menu['A propos'];
-					// Pre-calcule la première image
-					# Change l'etat pour indiquer que cette image est la nouvelle
-					$menu['First']=$this->data->menu['Voir photos'];
-					# Affiche une image au hasard
-					$menu['Random']=$this->data->menu['Random'];
-					# Pour afficher plus d'image passe à une autre page
-					$menu['More']=$this->data->menu['More'];
-					// Demande à calculer un zoom sur l'image
-					$menu['Zoom +']=$this->data->menu['Zoom +'];
-					// Demande à calculer un zoom sur l'image
-					$menu['Zoom -']=$this->data->menu['Zoom -'];
-					// Permet de déposer une nouvelle image
-					$menu['Depot']=$this->data->menu['Depot'];
-
-					// Affichage du menu
-					foreach ($menu as $item => $act) {
+				// Affichage du menu
+					foreach ($this->data->menu as $item => $act) {
 						print "<li><a href=\"$act\">$item</a></li>\n";
 					}
 					?>

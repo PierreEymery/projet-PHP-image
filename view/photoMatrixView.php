@@ -12,7 +12,7 @@
 			<h1>&nbsp;Site SIL3
 				<span class="float-right">
 					<form action="index.php" method="post">
-						<?php print "<span class=\"lead\">Bonjour, ".$_SESSION["login"]."</span>"; ?>
+						<?php print "<span class=\"lead\">Bonjour, ".$this->data->login."</span>"; ?>
 								<button type="submit" name="log_out" class="btn btn-primary">Deconnexion</button>
 								&nbsp;
 					</form>
@@ -23,18 +23,8 @@
 			<h3>Menu</h3>
 			<ul class="list-unstyled">
 				<?php
-
-					# Mise en place du menu
-					$menu['Home']=$this->data->menu['Home'];
-					$menu['A propos']=$this->data->menu['A propos'];
-					$menu['First']=$this->data->menu['First'];
-					$menu['Random']=$this->data->menu['Random'];
-					$menu['More']=$this->data->menu['More'];
-					if($this->data->nbImg != 1){
-					 	$menu['Less']=$this->data->menu['Less'];
-					}
-					// Affichage du menu
-					foreach ($menu as $item => $act) {
+				// Affichage du menu
+					foreach ($this->data->menu as $item => $act) {
 						print "<li><a href=\"$act\">$item</a></li>\n";
 					}
 					?>

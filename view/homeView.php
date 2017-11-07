@@ -13,7 +13,7 @@
 			<h1>&nbsp;Site SIL3
 				<span class="float-right">
 					<form action="index.php" method="post">
-						<?php print "<span class=\"lead\">Bonjour, ".$_SESSION["login"]."</span>"; ?>
+						<?php print "<span class=\"lead\">Bonjour, ".$this->data->login."</span>"; ?>
 
 								<button type="submit" name="log_out" class="btn btn-primary">Deconnexion</button>
 								&nbsp;
@@ -24,12 +24,8 @@
 		<div id="menu" class="text-center">
 			<h3>Menu</h3>
 			<ul class="list-unstyled">
-				<?php # Mise en place du menu par un parcours de la table associative
-					$menu['Home']=$this->data->menu['Home'];
-					$menu['A propos']=$this->data->menu['A propos'];
-					$menu['Voir photos']=$this->data->menu['Voir photos'];
-
-					foreach ($menu as $item => $act) {
+				<?php
+					foreach ($this->data->menu as $item => $act) {
 						print "<li><a href=\"$act\">$item</a></li>\n";
 					}
 					?>

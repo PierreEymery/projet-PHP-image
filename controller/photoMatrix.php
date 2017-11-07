@@ -38,18 +38,25 @@
 			$this->data->menu['Voir photos']="index.php?controller=photo&action=first";
 			$this->data->menu['First']="index.php?controller=photoMatrix&action=first&nbImg=".$this->nbImg;
 			$this->data->count = $this->imageDAO->size();
+			$this->data->content="photoMatrixView.php";
+
+			$this->data->login = $_SESSION['login'];
 
 		}
 
 
 		// LISTE DES ACTIONS DE CE CONTROLEUR
 
-		// Action par défaut
-		function index() {
-			$this->data->content="photoMatrixView.php";
-			$firstImg = $this->imageDAO->getImage($this->imgId);
-			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
+		function prepView(){
+			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
+			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+			$this->data->categories = $this->imageDAO->getCategories();
+			$this->data->imgId = $this->imgId;
 
+		}
+
+		function prepList($imgLst){
 			foreach ($imgLst as $i) {
 				# l'identifiant de cette image $i
 				$iId=$i->getId();
@@ -58,45 +65,30 @@
 				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
 				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
 			}
+		}
 
-			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
+		// Action par défaut
+		function index() {
+			$firstImg = $this->imageDAO->getImage($this->imgId);
+			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
 
-			$this->data->imgId = $this->imgId;
+			$this->prepList($imgLst);
+			$this->prepView();
+
 			$this->data->nbImg = $this->nbImg;
-
-			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
 		}
 
 		function categorie() {
-			$this->data->content="photoMatrixView.php";
 			$this->data->categorieAffichee=$_POST["categorie"];
-			// $firstImg = $this->imageDAO->getImage($this->imgId);
-			// $imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
-
 			$imgLst=$this->imageDAO->getCategoryImages($_POST["categorie"]);
 
-			foreach ($imgLst as $i) {
-				# l'identifiant de cette image $i
-				$iId=$i->getId();
-				# Ajoute à imgMatrixURL
-				#  0 : l'URL de l'image
-				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
-				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
-			}
+			$this->prepList($imgLst);
+			$this->prepView();
 
-			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
-
-			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = sizeof($imgLst);
-
-			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
@@ -104,27 +96,13 @@
 
 		// affiche la vue viewPhotoMatrix avec la première image affichée et deux photos
 		function first(){
-			$this->data->content="photoMatrixView.php";
 			$firstImg = $this->imageDAO->getImage($this->imgId);
 			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
 
-			foreach ($imgLst as $i) {
-				# l'identifiant de cette image $i
-				$iId=$i->getId();
-				# Ajoute à imgMatrixURL
-				#  0 : l'URL de l'image
-				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
-				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
-			}
+			$this->prepList($imgLst);
+			$this->prepView();
 
-			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
-
-			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
-
-			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
@@ -133,28 +111,14 @@
 		// renvoie la vue viewPhotoMatrix avec les photo suivantes de la dernière photo affichée, si elles existent,
 		// d'après l'id de la dernière photo affichée à l'appel de la fonction et le nombre de photos à afficher
 		function next(){
-			$this->data->content="photoMatrixView.php";
 			$this->imgId += $this->nbImg;
 			$firstImg = $this->imageDAO->getImage($this->imgId);
 			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
 
-			foreach ($imgLst as $i) {
-				# l'identifiant de cette image $i
-				$iId=$i->getId();
-				# Ajoute à imgMatrixURL
-				#  0 : l'URL de l'image
-				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
-				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
-			}
+			$this->prepList($imgLst);
+			$this->prepView();
 
-			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
-
-			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
-
-			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
@@ -163,63 +127,30 @@
 		// renvoie la vue viewPhotoMatrix avec les photo précédentes de la première photo affichée, si elles existent,
 		// d'après l'id de la première photo affichée à l'appel de la fonction et le nombre de photos à afficher
 		function prev(){
-			$this->data->content="photoMatrixView.php";
 			$this->imgId -= $this->nbImg;
 			$firstImg = $this->imageDAO->getImage($this->imgId);
 			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
 
-			foreach ($imgLst as $i) {
-				# l'identifiant de cette image $i
-				$iId=$i->getId();
-				# Ajoute à imgMatrixURL
-				#  0 : l'URL de l'image
-				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
-				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
-			}
+			$this->prepList($imgLst);
+			$this->prepView();
 
-			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
-
-			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
-
-			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
-		}
-
-		// renvoie la vue viewPhotoMatrix avec un nombre défini de photos sélectionnées aléatoirement
-		function random(){
-
 		}
 
 		// affiche plus de photos
 		function more(){
 			$this->nbImg *= 2;
 
-			$this->data->content="photoMatrixView.php";
 			$firstImg = $this->imageDAO->getImage($this->imgId);
 			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
 
-			foreach ($imgLst as $i) {
-				# l'identifiant de cette image $i
-				$iId=$i->getId();
-				# Ajoute à imgMatrixURL
-				#  0 : l'URL de l'image
-				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
-				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
-			}
+			$this->prepList($imgLst);
+			$this->prepView();
 
-			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
-
-			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
-
-			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
@@ -229,55 +160,27 @@
 		function less(){
 			$this->nbImg /= 2;
 
-			$this->data->content="photoMatrixView.php";
 			$firstImg = $this->imageDAO->getImage($this->imgId);
 			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
 
-			foreach ($imgLst as $i) {
-				# l'identifiant de cette image $i
-				$iId=$i->getId();
-				# Ajoute à imgMatrixURL
-				#  0 : l'URL de l'image
-				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
-				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
-			}
+			$this->prepList($imgLst);
+			$this->prepView();
 
-			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
-
-			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
-
-			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
 		}
 
 		function randomImage() {
-			$this->data->content="photoMatrixView.php";
 			$firstImg = $this->imageDAO->getImage($this->imageDAO->getRandomImage());
 			$imgLst= $this->imageDAO->getImageList($firstImg,$this->nbImg);
 			$this->imgId = $firstImg->getId();
 
-			foreach ($imgLst as $i) {
-				# l'identifiant de cette image $i
-				$iId=$i->getId();
-				# Ajoute à imgMatrixURL
-				#  0 : l'URL de l'image
-				#  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
-				$this->data->imgMatrixURL[] = array($i->getURL(),"index.php?controller=photo&imgId=$iId");
-			}
+			$this->prepList($imgLst);
+			$this->prepView();
 
-			$this->data->menu['More']="index.php?controller=photoMatrix&action=more&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Less']="index.php?controller=photoMatrix&action=less&nbImg=".$this->nbImg."&imgId=".$this->imgId;
-			$this->data->menu['Random'] = "index.php?controller=photoMatrix&action=randomImage&nbImg=".$this->nbImg;
-
-			$this->data->imgId = $this->imgId;
 			$this->data->nbImg = $this->nbImg;
-
-			$this->data->categories = $this->imageDAO->getCategories();
 
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");

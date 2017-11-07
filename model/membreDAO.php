@@ -19,14 +19,6 @@ class MembreDAO {
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    function getMembre($user_id): User {
-        if (isset($user_id)) {
-            $s = $this->db->query('SELECT * FROM membre WHERE id=' . $user_id);
-        } else {
-            var_dump('Il n\'y a pas de membre');
-        }
-    }
-
     function saveUser($login, $password) {
         try {
             $req = 'INSERT INTO membre (login,password) VALUES ("' . $login . '","' . $password . '")';
@@ -52,17 +44,15 @@ class MembreDAO {
         //$data = mysql_fetch_assoc($req);
         $data = $req->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($data[0]['password'] != $password) {
-            echo '<div class="alert alert-dismissable alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">x</button>
-                    <strong>Oh Non !</strong> Mauvais login / password. Merci de recommencer !
-                </div>';
-        } else {
-            $_SESSION['login'] = $login;
-            echo '<div class="alert alert-dismissable alert-success">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Yes !</strong> Vous etes bien logué, Redirection dans 5 secondes ! <meta http-equiv="refresh" content="5; URL=index.php">
-                  </div>';
+        // renvoi code retour vers controleur
+
+        if ($data) {
+          if ($data[0]['password'] != $password) {
+              return 0;
+          } else {
+              $_SESSION['login'] = $login;
+              return 1;
+          }
         }
     }
 
