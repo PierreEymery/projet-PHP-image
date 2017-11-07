@@ -29,6 +29,20 @@ class Membre {
         }
     }
 
+    function prepMessage($retour){
+      if ($retour == 0) {
+        $this->data->message = '<div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                <strong>Oh Non !</strong> Mauvais login / password. Merci de recommencer !
+            </div>';
+      }elseif ($retour == 1) {
+        $this->data->message = '<div class="alert alert-dismissable alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Yes !</strong> Vous etes bien logué, Redirection dans 5 secondes ! <meta http-equiv="refresh" content="5; URL=index.php">
+              </div>';
+      }
+    }
+
     function index() {
         $this->data->content = "connexionView.php";
 
@@ -38,12 +52,15 @@ class Membre {
                 //extract($_POST);
                 $login = $_POST['login'];
                 $password = $_POST['password'];
-                $this->membreDAO->checkUser($login, $password);
+                $retour = $this->membreDAO->checkUser($login, $password);
+                $this->prepMessage($retour);
             }
             if (isset($_POST['inscription'])) {
                 $login = $_POST['login'];
                 $password = $_POST['password'];
-                $this->membreDAO->saveUser($login, $password);
+                $retour = $this->membreDAO->saveUser($login, $password);
+                $this->prepMessage($retour);
+
             }
         } else {
             $champs = '<p><b>(Remplissez tous les champs pour vous connectez !)</b></p>';

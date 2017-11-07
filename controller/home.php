@@ -8,6 +8,8 @@
 		function __construct() {
 			// Ouvre le blog
 			$this->data = new Data();
+			$this->data->login = $_SESSION['login'];
+
 		}
 
 		// Recupere les parametres de manière globale
@@ -26,6 +28,8 @@
 			} else {
 				$mode = "normal";
 			}
+
+
 		}
 
 		// LISTE DES ACTIONS DE CE CONTROLEUR
@@ -33,9 +37,7 @@
 		// Action par défaut
 		function index() {
 			$this->data->content="homeView.php";
-			$this->data->menu['Home']="index.php";
-			$this->data->menu['A propos']="index.php?controller=home&action=aPropos";
-			$this->data->menu['Voir photos']="index.php?controller=photo&action=first";
+			$this->prepView();
 			// Selectionne et charge la vue
 			require_once("view/mainView.php");
 		}
@@ -43,11 +45,15 @@
 		// affiche la vue A propos de l'application
 		function apropos(){
 			$this->data->content="aProposView.php";
+			$this->prepView();
+			// Selectionne et charge la vue
+			require_once("view/mainView.php");
+		}
+
+		function prepView(){
 			$this->data->menu['Home']="index.php";
 			$this->data->menu['A propos']="index.php?controller=home&action=aPropos";
 			$this->data->menu['Voir photos']="index.php?controller=photo&action=first";
-			// Selectionne et charge la vue
-			require_once("view/mainView.php");
 		}
 
 
