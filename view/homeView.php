@@ -39,7 +39,7 @@
 		<div id="corps">
 			<h1> Bonjour !</h1>
 			<p> Cette application vous permet de manipuler des photos <br/>
-			Vous pouvez : naviguer, partager, classer en album </p>
+			Vous pouvez : noter, afficher par catégories, modifier, déposer des images</p>
 			</div>
 
 		<div id="pied_de_page">
