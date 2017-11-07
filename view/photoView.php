@@ -63,6 +63,7 @@
 
 		<div id="corps">
 			<?php # mise en place de la vue partielle : le contenu central de la page
+			// var_dump($this->data);
 				print "<p>\n";
 				$size=$this->data->size;
 				$imgId=$this->data->imgId;
