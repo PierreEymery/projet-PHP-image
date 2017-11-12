@@ -147,6 +147,7 @@
 			return $res;
 		}
 
+		// retourne la liste des images d'une catégorie
 		function getCategoryImages($cat): array {
 			$imagesListe = array();
 			$s = $this->db->query('SELECT * FROM image WHERE category="'.$cat.'"');
@@ -165,6 +166,7 @@
 			return $imagesListe;
 		}
 
+		//retourne la liste des catégories présentes dans la base
 		function getCategories(): array {
 			$categories = array();
 			$s = $this->db->query('SELECT DISTINCT category FROM image');
@@ -203,6 +205,7 @@
 			}
 		}
 
+		// effectue la sauvegarde du fichier image et son ajout dans la bdd
 		function saveFile($file, $categorie, $comment) {
 
 			$q = $this->db->query('SELECT MAX(id) FROM image');

@@ -51,6 +51,7 @@
 
 		// LISTE DES ACTIONS DE CE CONTROLEUR
 
+		//prépar les données communes à toutes les vues
 		function prepView(){
 			$this->data->moyenne = $this->img->getNote();
 			$this->data->nbVotes = $this->img->getNbVotes();
@@ -146,6 +147,7 @@
 			require_once("view/mainView.php");
 		}
 
+		// appelle le modèle pour modification de la catégorie de la photo
 		function updateCategorie(){
 			$imgId = $_POST["imgId"];
 			$newCategorie = $_POST["newCategorie"];
@@ -160,6 +162,7 @@
 			require_once("view/mainView.php");
 		}
 
+		// appelle le modèle pour modification du commentaire de la photo
 		function updateComment(){
 			$imgId = $_POST["imgId"];
 			$newComment = $_POST["newComment"];
@@ -174,6 +177,7 @@
 			require_once("view/mainView.php");
 		}
 
+		// ajoute une note à la photo
 		function setNote(){
 			$imgId = $_POST["imgId"];
 			$note = $_POST["note"];
@@ -189,6 +193,7 @@
 			require_once("view/mainView.php");
 		}
 
+		// permet de déposer une image sur le serveur
 		function depotImage(){
 			if (isset($_FILES['newFile'])) {
 				if (isset($_POST["fileNewCategorie"])) {

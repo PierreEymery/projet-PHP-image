@@ -81,6 +81,7 @@
 			require_once("view/mainView.php");
 		}
 
+		// affiche la vue viewPhotoMatrix avec les hpotos d'une catégorie
 		function categorie() {
 			$this->data->categorieAffichee=$_POST["categorie"];
 			$imgLst=$this->imageDAO->getCategoryImages($_POST["categorie"]);

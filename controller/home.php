@@ -50,6 +50,7 @@
 			require_once("view/mainView.php");
 		}
 
+		// prépare les liens des menus dans la vue
 		function prepView(){
 			$this->data->menu['Home']="index.php";
 			$this->data->menu['A propos']="index.php?controller=home&action=aPropos";

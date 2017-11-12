@@ -29,6 +29,7 @@ class Membre {
         }
     }
 
+    // prépare le message affiché lors de la tentative de connexion, selon le résultat
     function prepMessage($retour){
       if ($retour == 0) {
         $this->data->message = '<div class="alert alert-dismissable alert-danger">
@@ -43,6 +44,7 @@ class Membre {
       }
     }
 
+    // affiche la vue de connexion ConnexionView
     function index() {
         $this->data->content = "connexionView.php";
 
